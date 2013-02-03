@@ -1,19 +1,18 @@
 # main test routine for SABR
-setwd("C:\\Users\\Qitian\\Documents\\R\\SABR")
+# this script tests the effect of adjusting different SABR parameters
 source("SABRVol.r")
 
-windows()
-
-nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; T = 1;
+nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; maturity = 1;
 K <- seq(.01, .06, by=.002)
 
 f1 = .025
-vols1 <- SABRVol(alpha, rho, nu, beta, f1, K, T)
+vols1 <- SABRVol(alpha, rho, nu, beta, f1, K, maturity)
 f2 = .015
-vols2 <- SABRVol(alpha, rho, nu, beta, f2, K, T)
+vols2 <- SABRVol(alpha, rho, nu, beta, f2, K, maturity)
 f3 = .035
-vols3 <- SABRVol(alpha, rho, nu, beta, f3, K, T)
+vols3 <- SABRVol(alpha, rho, nu, beta, f3, K, maturity)
 
+png("shift in f.png", 800, 600)
 plot(K, vols1, type = "l", col = 1, lty = 1, 
      xlim = c(0.008,0.06), ylim = c(0.1,0.3),
      xlab = "K", ylab = expression(sigma[B] ~ ""))
@@ -24,19 +23,19 @@ legend(0.045, .30,
        c(expression("f = .025"), expression("f = .015"), expression("f = .035")), 
        col = c(1,1,1), text.col = "green4", lty = c(1,2,3),
        merge = FALSE, bg = 'gray90')
-savePlot(filename = "Shift in f",
-         type = "tiff", device = dev.cur(), restoreConsole = TRUE)
+dev.off()
 
-nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; T = 1;
+nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; maturity = 1;
 K <- seq(.01, .06, by=.002)
 nu = .30
-vols1 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols1 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 nu = .10
-vols2 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols2 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 nu = .50
-vols3 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols3 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 
 
+png("shift in nu.png", 800, 600)
 plot(K, vols1, type = "l", col = 1, lty = 1, 
      xlim = c(0.008,0.06), ylim = c(0.1,0.3),
      xlab = "K", ylab = expression(sigma[B] ~ ""))
@@ -47,19 +46,18 @@ legend(0.045, .30,
        c(expression(nu ~ " = .30"), expression(nu ~ " = .10"), expression(nu ~ " = .50")), 
        col = c(1,1,1), text.col = "green4", lty = c(1,2,3),
        merge = FALSE, bg = 'gray90')
-savePlot(filename = "Shift in nu",
-         type = "tiff", device = dev.cur(), restoreConsole = TRUE)
+dev.off()
 
-nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; T = 1;
+nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; maturity = 1;
 K <- seq(.01, .06, by=.002)
 alpha = .03
-vols1 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols1 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 alpha = .01
-vols2 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols2 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 alpha = .05
-vols3 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols3 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 
-
+png("shift in alpha.png", 800, 600)
 plot(K, vols1, type = "l", col = 1, lty = 1, 
      xlim = c(0.008,0.06), ylim = c(0.0,0.4),
      xlab = "K", ylab = expression(sigma[B] ~ ""))
@@ -70,19 +68,19 @@ legend(0.045, .40,
        col = c(1,1,1), text.col = "green4", lty = c(1,2,3),
        merge = FALSE, bg = 'gray90')
 title(main = expression("Shift in " ~ alpha ~ ""))
-savePlot(filename = "Shift in alpha",
-         type = "tiff", device = dev.cur(), restoreConsole = TRUE)
+dev.off()
 
 
-nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; T = 1;
+nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; maturity = 1;
 K <- seq(.01, .06, by=.002)
 rho = -.30
-vols1 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols1 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 rho = -.80
-vols2 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols2 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 rho = .80
-vols3 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols3 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 
+png("shift in rho.png", 800, 600)
 plot(K, vols1, type = "l", col = 1, lty = 1, 
      xlim = c(0.008,0.06), ylim = c(0.05,0.3),
      xlab = "K", ylab = expression(sigma[B] ~ ""))
@@ -93,24 +91,20 @@ legend(0.045, .30,
        col = c(1,1,1), text.col = "green4", lty = c(1,2,3),
        merge = FALSE, bg = 'gray90')
 title(main = expression("Shift in " ~ rho ~ ""))
+dev.off()
 
-savePlot(filename = "Shift in rho",
-         type = "tiff", device = dev.cur(), restoreConsole = TRUE)
-
-
-
-nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; T = 1;
+nu = .30; alpha = .03; rho = -.30; beta = .60; f = .025; maturity = 1;
 K <- seq(.01, .06, by=.002)
 beta = .60
-vols1 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols1 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 beta = .40
-vols2 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols2 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 beta = .80
-vols3 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols3 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 beta = .0
-vols4 <- SABRVol(alpha, rho, nu, beta, f, K, T)
+vols4 <- SABRVol(alpha, rho, nu, beta, f, K, maturity)
 
-
+png("shift in beta.png", 800, 600)
 plot(K, vols1, type = "l", col = 1, lty = 1, 
      xlim = c(0.008,0.06), ylim = c(0.0,.5),
      xlab = "K", ylab = expression(sigma[B]))
@@ -121,5 +115,4 @@ legend(0.045, .50,
        col = c(1,1,1), text.col = "green4", lty = c(1,2,3),
        merge = FALSE, bg = 'gray90')
 title(main = expression("Shift in " ~ beta ~ ""))
-savePlot(filename = "Shift in beta",
-         type = "tiff", device = dev.cur(), restoreConsole = TRUE)
+dev.off()
