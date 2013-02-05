@@ -1,3 +1,5 @@
+rm(list=ls())
+
 require(dlm)
 source("kalman.R")
 read.csv("data.csv")->raw
