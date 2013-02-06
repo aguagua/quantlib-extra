@@ -1,14 +1,16 @@
 rm(list=ls())
 
-source("kalman_arma11.R")
+source("kalman.R")
 read.csv("data.csv")->raw
 raw<-log(raw)
-Y=raw[,2]
+Y=matrix(raw[,2])
 p0=c(0,100000,1,1)
 
+#debug(kalman.ll)
 build<-function(p) {
-  kalman.ll(p,Y)->res
-  return(res)
+  pF=matrix(1); pH = matrix(1); pQ=matrix(p[4]); pR=matrix(p[3]); pX0=matrix(p[1]); pV0=matrix(p[2])
+  kalman.ll(pF, pH, pQ, pR, pX0, pV0, Y)->res
+  return(-res)
 }
 
 res2<-optim(p0,build)
