@@ -1,17 +1,24 @@
 rm(list=ls())
 
-source("kalman_arma11.R")
+require(expm)
+source("kalman.R")
 read.csv("data.csv")->raw
 raw<-log(raw)
-Y=raw[,2]
-p0=c(0,100000,1,1)
+Y=matrix(raw[,2])
+p0=c(0,(100000),(1),(1))
 
+#debug(kalman.ll)
 build<-function(p) {
-  kalman.ll(p,Y)->res
-  return(res)
+  pF=matrix(1); pH = matrix(1); 
+  pX0=matrix(p[1]); 
+  pV0=(matrix(p[2]));
+  pR=(matrix(p[3])); 
+  pQ=(matrix(p[4])); 
+  
+  kalman.ll2(pF, pH, pQ, pR, pX0, pV0, Y)->res
+  return(-res)
 }
-
-res1<-nlm(build,p0)
+#res1<-nlm(build,p0)
 #print(c(res1$estimate[1],exp(res1$estimate[-1])))
 res2<-optim(p0,build)
 sm2<-kalman.smooth(res2$par,Y)
