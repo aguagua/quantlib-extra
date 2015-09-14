@@ -1,0 +1,1 @@
+The project is based on the famous open source quantlib project and here we are aiming to add some latest developments in quantitative finance, for example, Fourier transform technique for option pricing.
